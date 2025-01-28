@@ -44,7 +44,8 @@ df = (spark
 )
 
 print("Is the dataframe streaming:", df.isStreaming)
-c
+df.printSchema()
+
 
 # COMMAND ----------
 
@@ -54,11 +55,12 @@ c
 
 # COMMAND ----------
 
-from pyspark.sql.functions import col, approx_count_distinct, count
+# from pyspark.sql.functions import col, approx_count_distinct, count
+import pyspark.sql.functions as F
 # import F. Also, cell imports in 
 email_traffic_df = (df
-                    .filter(col("traffic_source") == "email")
-                    .withColumn("mobile", col("device").isin(["iOS", "Android"]))
+                    .filter(F.col("traffic_source") == "email")
+                    .withColumn("mobile", F.col("device").isin(["iOS", "Android"]))
                     .select("user_id", "event_timestamp", "device", "mobile")
                    )
 
