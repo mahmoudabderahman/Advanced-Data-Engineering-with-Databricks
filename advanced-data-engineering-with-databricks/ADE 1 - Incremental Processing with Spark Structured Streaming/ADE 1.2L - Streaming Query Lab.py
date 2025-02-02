@@ -51,8 +51,11 @@ display(spark.read.format("delta").load(DA.paths.sales).limit(10))
 # TODO
 df = (spark.readStream
       .format("delta")
+      .option("maxFilesPerTrigger", 1)
       .load(DA.paths.sales)
 )
+
+display(df)
 
 # COMMAND ----------
 
@@ -86,7 +89,7 @@ coupon_sales_df = (df
                    )
 
 coupon_sales_df.isStreaming
-# display(coupon_sales_df.limit(100))
+display(coupon_sales_df.limit(100))
 
 # COMMAND ----------
 
